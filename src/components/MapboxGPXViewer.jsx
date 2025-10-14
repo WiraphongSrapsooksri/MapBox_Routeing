@@ -10,6 +10,7 @@ const SAMPLE_GPX_FILES = [
   { name: 'Route 2', path: '/gpx/route2.gpx' },
   { name: 'Route 3', path: '/gpx/route3.gpx' },
   { name: 'Route 4', path: '/gpx/route4.gpx' },
+  { name: 'Route 5', path: '/gpx/route5.gpx' },
 ];
 
 const MapboxGPXViewer = () => {
