@@ -1,5 +1,6 @@
 // src/components/PathPlanningPanel.jsx
 import React, { useState, useEffect } from 'react';
+import '../styles/AppleDesignSystem.css';
 import {
   PLANNING_PRESETS,
   DEFAULT_PLANNING_PARAMS,
@@ -42,67 +43,6 @@ const PathPlanningPanel = ({
 
   const [enableMultiPath, setEnableMultiPath] = useState(false);
   const [maxAlternativePaths, setMaxAlternativePaths] = useState(5);
-
-  // สไตล์หลัก
-  const styles = {
-    container: {
-      backgroundColor: '#ffffff',
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-      padding: '24px',
-      marginBottom: '16px',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif'
-    },
-    heading: {
-      margin: '0 0 24px 0',
-      fontSize: '20px',
-      fontWeight: '600',
-      color: '#1a1a1a',
-      borderBottom: '2px solid #e5e7eb',
-      paddingBottom: '12px',
-      letterSpacing: '-0.02em'
-    },
-    label: {
-      display: 'block',
-      fontSize: '14px',
-      fontWeight: '600',
-      marginBottom: '8px',
-      color: '#374151'
-    },
-    input: {
-      width: '100%',
-      padding: '10px 14px',
-      borderRadius: '6px',
-      border: '1px solid #d1d5db',
-      fontSize: '14px',
-      backgroundColor: '#ffffff',
-      color: '#1f2937',
-      transition: 'border-color 0.2s, box-shadow 0.2s'
-    },
-    button: {
-      padding: '10px 16px',
-      fontSize: '14px',
-      fontWeight: '500',
-      border: 'none',
-      borderRadius: '6px',
-      cursor: 'pointer',
-      transition: 'all 0.2s'
-    },
-    infoBox: {
-      padding: '14px',
-      borderRadius: '6px',
-      fontSize: '13px',
-      lineHeight: '1.6',
-      marginBottom: '16px'
-    },
-    section: {
-      marginBottom: '20px'
-    },
-    divider: {
-      borderTop: '1px solid #e5e7eb',
-      margin: '20px 0'
-    }
-  };
 
   const handlePresetChange = (presetKey) => {
     setSelectedPreset(presetKey);
@@ -183,37 +123,64 @@ const PathPlanningPanel = ({
   };
 
   return (
-    <div style={styles.container}>
-      <h3 style={styles.heading}>
-        วางแผนเส้นทาง
-      </h3>
+    <div className="apple-card glass-panel animate-fade-in" style={{ marginBottom: 'var(--space-4)' }}>
+      {/* Header */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--space-3)',
+        marginBottom: 'var(--space-6)',
+        paddingBottom: 'var(--space-4)',
+        borderBottom: '1px solid var(--gray-200)'
+      }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: 'var(--radius-md)',
+          background: 'linear-gradient(135deg, var(--apple-blue) 0%, #0077ed 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '24px',
+          boxShadow: '0 4px 12px rgba(0, 113, 227, 0.3)'
+        }}>
+          🗺️
+        </div>
+        <div style={{ flex: 1 }}>
+          <h3 className="apple-heading-sm" style={{ margin: 0, marginBottom: '4px' }}>
+            วางแผนเส้นทาง
+          </h3>
+          <p className="apple-text-xs" style={{ margin: 0 }}>
+            เลือกจุดเริ่มต้นและปลายทางบนแผนที่
+          </p>
+        </div>
+      </div>
 
       {/* Toggle Planning Mode Button */}
       <button
         onClick={onTogglePathPlanningMode}
-        style={{
-          ...styles.button,
-          width: '100%',
-          backgroundColor: isPathPlanningMode ? '#ef4444' : '#3b82f6',
-          color: 'white',
-          marginBottom: '20px'
-        }}
+        className={`apple-button apple-button-full ${isPathPlanningMode ? 'apple-button-danger' : 'apple-button-primary'}`}
+        style={{ marginBottom: 'var(--space-5)' }}
       >
-        {isPathPlanningMode ? 'ยกเลิกโหมดวางแผน' : 'เลือกจุดบนแผนที่'}
+        {isPathPlanningMode ? '✕ ยกเลิกโหมดวางแผน' : '📍 เลือกจุดบนแผนที่'}
       </button>
 
       {/* Instructions - Active Mode */}
       {isPathPlanningMode && (
-        <div style={{
-          ...styles.infoBox,
-          backgroundColor: '#eff6ff',
-          border: '1px solid #bfdbfe'
-        }}>
-          <div style={{ fontWeight: '600', marginBottom: '8px', color: '#1e40af' }}>วิธีใช้</div>
-          <ol style={{ margin: '0', paddingLeft: '20px', color: '#1e3a8a' }}>
-            <li style={{ marginBottom: '4px' }}><strong>Shift + คลิกขวา</strong> บนแผนที่</li>
-            <li style={{ marginBottom: '4px' }}>เลือก <strong>ตั้งเป็นจุดเริ่มต้น (A)</strong> หรือ <strong>ตั้งเป็นจุดปลายทาง (B)</strong></li>
-            <li style={{ marginBottom: '4px' }}>ปรับพารามิเตอร์ตามต้องการ</li>
+        <div className="apple-info-box apple-info-box-info" style={{ marginBottom: 'var(--space-5)' }}>
+          <div style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-2)' }}>
+            💡 วิธีใช้งาน
+          </div>
+          <ol style={{ margin: 0, paddingLeft: '20px', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
+            <li><kbd style={{
+              padding: '2px 6px',
+              background: 'var(--gray-100)',
+              borderRadius: 'var(--radius-xs)',
+              fontFamily: 'monospace',
+              fontSize: '11px'
+            }}>Shift</kbd> + <strong>คลิกขวา</strong> บนแผนที่</li>
+            <li>เลือก <strong>ตั้งเป็นจุดเริ่มต้น (A)</strong> หรือ <strong>ตั้งเป็นจุดปลายทาง (B)</strong></li>
+            <li>ปรับพารามิเตอร์ตามต้องการ</li>
             <li>กดปุ่ม "คำนวนเส้นทาง"</li>
           </ol>
         </div>
@@ -221,67 +188,119 @@ const PathPlanningPanel = ({
 
       {/* Instructions - Tips */}
       {!isPathPlanningMode && mode === 'planning' && (
-        <div style={{
-          ...styles.infoBox,
-          backgroundColor: '#fffbeb',
-          border: '1px solid #fde68a'
-        }}>
-          <div style={{ fontWeight: '600', marginBottom: '6px', color: '#92400e' }}>เคล็ดลับ</div>
-          <div style={{ color: '#78350f' }}>
-            • <strong>Shift + คลิกขวา</strong> → เลือกจุด A, B<br />
-            • <strong>Ctrl + คลิกขวา</strong> → ดูข้อมูลพื้นที่
+        <div className="apple-info-box apple-info-box-warning" style={{ marginBottom: 'var(--space-5)' }}>
+          <div style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-2)' }}>
+            ⚡ เคล็ดลับ
+          </div>
+          <div style={{ fontSize: 'var(--font-size-sm)' }}>
+            • <kbd style={{
+              padding: '2px 6px',
+              background: 'rgba(255,149,0,0.1)',
+              borderRadius: 'var(--radius-xs)',
+              fontFamily: 'monospace'
+            }}>Shift + คลิกขวา</kbd> → เลือกจุด A, B<br />
+            • <kbd style={{
+              padding: '2px 6px',
+              background: 'rgba(255,149,0,0.1)',
+              borderRadius: 'var(--radius-xs)',
+              fontFamily: 'monospace'
+            }}>Ctrl + คลิกขวา</kbd> → ดูข้อมูลพื้นที่
           </div>
         </div>
       )}
 
       {/* Points Display */}
-      <div style={styles.section}>
+      <div className="apple-section">
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '12px'
+          marginBottom: 'var(--space-3)'
         }}>
-          <span style={{ ...styles.label, marginBottom: '0' }}>จุดที่เลือก</span>
+          <label className="apple-label" style={{ marginBottom: 0 }}>จุดที่เลือก</label>
           {(startPoint || goalPoint) && (
             <button
               onClick={onClearPoints}
+              className="apple-button apple-button-sm"
               style={{
-                ...styles.button,
-                padding: '6px 12px',
-                fontSize: '12px',
-                backgroundColor: '#ef4444',
+                background: 'var(--apple-red)',
                 color: 'white'
               }}
             >
-              ล้าง
+              🗑️ ล้าง
             </button>
           )}
         </div>
 
         <div style={{
-          backgroundColor: '#f9fafb',
-          padding: '14px',
-          borderRadius: '6px',
-          fontSize: '13px',
-          border: '1px solid #e5e7eb'
+          background: 'var(--gray-50)',
+          padding: 'var(--space-4)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid var(--gray-200)'
         }}>
-          <div style={{ marginBottom: '10px' }}>
-            <div style={{ fontWeight: '600', color: '#059669', marginBottom: '4px' }}>
-              จุดเริ่มต้น (A)
+          <div style={{ marginBottom: 'var(--space-3)' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              marginBottom: 'var(--space-1)'
+            }}>
+              <span style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: 'var(--apple-green)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: 'var(--font-weight-bold)',
+                boxShadow: '0 2px 4px rgba(48, 209, 88, 0.3)'
+              }}>A</span>
+              <span className="apple-label" style={{ marginBottom: 0 }}>จุดเริ่มต้น</span>
             </div>
-            <div style={{ marginLeft: '12px', color: '#6b7280', fontSize: '12px' }}>
+            <div className="apple-text-sm" style={{
+              marginLeft: '32px',
+              fontFamily: 'monospace',
+              color: startPoint ? 'var(--gray-700)' : 'var(--gray-400)'
+            }}>
               {startPoint ?
                 `${startPoint.lat.toFixed(6)}, ${startPoint.lng.toFixed(6)}` :
                 'ยังไม่ได้เลือก'
               }
             </div>
           </div>
+
+          <hr className="apple-divider" style={{ margin: 'var(--space-3) 0' }} />
+
           <div>
-            <div style={{ fontWeight: '600', color: '#dc2626', marginBottom: '4px' }}>
-              จุดปลายทาง (B)
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              marginBottom: 'var(--space-1)'
+            }}>
+              <span style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: 'var(--apple-red)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: 'var(--font-weight-bold)',
+                boxShadow: '0 2px 4px rgba(255, 59, 48, 0.3)'
+              }}>B</span>
+              <span className="apple-label" style={{ marginBottom: 0 }}>จุดปลายทาง</span>
             </div>
-            <div style={{ marginLeft: '12px', color: '#6b7280', fontSize: '12px' }}>
+            <div className="apple-text-sm" style={{
+              marginLeft: '32px',
+              fontFamily: 'monospace',
+              color: goalPoint ? 'var(--gray-700)' : 'var(--gray-400)'
+            }}>
               {goalPoint ?
                 `${goalPoint.lat.toFixed(6)}, ${goalPoint.lng.toFixed(6)}` :
                 'ยังไม่ได้เลือก'
@@ -292,18 +311,15 @@ const PathPlanningPanel = ({
       </div>
 
       {/* Preset Selection */}
-      <div style={styles.section}>
-        <label style={styles.label}>
-          เลือก Preset
+      <div className="apple-section">
+        <label className="apple-label">
+          🎯 เลือก Preset
         </label>
         <select
           value={selectedPreset}
           onChange={(e) => handlePresetChange(e.target.value)}
           disabled={isPlanning}
-          style={{
-            ...styles.input,
-            cursor: 'pointer'
-          }}
+          className="apple-input apple-select"
         >
           <option value="">เลือก Preset (ไม่บังคับ)</option>
           {Object.entries(PLANNING_PRESETS).map(([key, preset]) => (
@@ -315,32 +331,26 @@ const PathPlanningPanel = ({
       </div>
 
       {selectedPreset && PLANNING_PRESETS[selectedPreset] && (
-        <div style={{
-          ...styles.infoBox,
-          backgroundColor: '#dbeafe',
-          border: '1px solid #93c5fd',
-          marginTop: '-8px'
-        }}>
-          <strong style={{ color: '#1e40af' }}>{PLANNING_PRESETS[selectedPreset].name}</strong>
-          <div style={{ color: '#1e3a8a', fontSize: '12px', marginTop: '4px' }}>
+        <div className="apple-info-box apple-info-box-info">
+          <div style={{ fontWeight: 'var(--font-weight-semibold)' }}>
+            {PLANNING_PRESETS[selectedPreset].name}
+          </div>
+          <div className="apple-text-xs" style={{ marginTop: 'var(--space-1)' }}>
             {PLANNING_PRESETS[selectedPreset].description}
           </div>
         </div>
       )}
 
       {/* Planner Type */}
-      <div style={styles.section}>
-        <label style={styles.label}>
-          อัลกอริทึม
+      <div className="apple-section">
+        <label className="apple-label">
+          ⚙️ อัลกอริทึม
         </label>
         <select
           value={plannerType}
           onChange={(e) => setPlannerType(e.target.value)}
           disabled={isPlanning}
-          style={{
-            ...styles.input,
-            cursor: 'pointer'
-          }}
+          className="apple-input apple-select"
         >
           <option value="astar">A* (เร็ว, เหมาะกับการเดินทางทั่วไป)</option>
           <option value="hybrid_astar">Hybrid A* (ช้ากว่า, เหมาะกับยานพาหนะ)</option>
@@ -348,30 +358,30 @@ const PathPlanningPanel = ({
       </div>
 
       {/* Basic Parameters */}
-      <div style={styles.section}>
+      <div className="apple-section">
         <label style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: 'var(--space-2)',
           cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          marginBottom: '20px',
-          color: '#374151'
+          fontSize: 'var(--font-size-base)',
+          fontWeight: 'var(--font-weight-medium)',
+          color: 'var(--gray-700)',
+          marginBottom: 'var(--space-5)'
         }}>
           <input
             type="checkbox"
             checked={useOsmRoads}
             onChange={(e) => setUseOsmRoads(e.target.checked)}
             disabled={isPlanning}
-            style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#3b82f6' }}
+            className="apple-checkbox"
           />
-          <span>ใช้ถนนจาก OpenStreetMap</span>
+          <span>🛣️ ใช้ถนนจาก OpenStreetMap</span>
         </label>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={styles.label}>
-            น้ำหนักความชัน: {slopeWeight}
+        <div style={{ marginBottom: 'var(--space-5)' }}>
+          <label className="apple-label">
+            ⛰️ น้ำหนักความชัน: <span className="apple-badge apple-badge-blue">{slopeWeight}</span>
           </label>
           <input
             type="range"
@@ -381,14 +391,14 @@ const PathPlanningPanel = ({
             value={slopeWeight}
             onChange={(e) => setSlopeWeight(parseFloat(e.target.value))}
             disabled={isPlanning}
-            style={{ width: '100%', accentColor: '#3b82f6' }}
+            className="apple-slider"
           />
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
-            fontSize: '11px',
-            color: '#9ca3af',
-            marginTop: '4px'
+            fontSize: 'var(--font-size-xs)',
+            color: 'var(--gray-500)',
+            marginTop: 'var(--space-1)'
           }}>
             <span>0 (ไม่สนใจ)</span>
             <span>10 (หลีกเลี่ยงมาก)</span>
@@ -396,8 +406,8 @@ const PathPlanningPanel = ({
         </div>
 
         <div>
-          <label style={styles.label}>
-            ความชันสูงสุด: {maxSlopeDegrees}°
+          <label className="apple-label">
+            📐 ความชันสูงสุด: <span className="apple-badge apple-badge-orange">{maxSlopeDegrees}°</span>
           </label>
           <input
             type="range"
@@ -407,14 +417,14 @@ const PathPlanningPanel = ({
             value={maxSlopeDegrees}
             onChange={(e) => setMaxSlopeDegrees(parseInt(e.target.value))}
             disabled={isPlanning}
-            style={{ width: '100%', accentColor: '#3b82f6' }}
+            className="apple-slider"
           />
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
-            fontSize: '11px',
-            color: '#9ca3af',
-            marginTop: '4px'
+            fontSize: 'var(--font-size-xs)',
+            color: 'var(--gray-500)',
+            marginTop: 'var(--space-1)'
           }}>
             <span>10°</span>
             <span>90°</span>
@@ -425,49 +435,35 @@ const PathPlanningPanel = ({
       {/* Advanced Settings Toggle */}
       <button
         onClick={() => setShowAdvanced(!showAdvanced)}
-        style={{
-          ...styles.button,
-          width: '100%',
-          backgroundColor: '#f3f4f6',
-          color: '#374151',
-          border: '1px solid #d1d5db',
-          marginBottom: '20px'
-        }}
+        className="apple-button apple-button-secondary apple-button-full"
+        style={{ marginBottom: 'var(--space-5)' }}
       >
         {showAdvanced ? '▲ ซ่อนการตั้งค่าขั้นสูง' : '▼ แสดงการตั้งค่าขั้นสูง'}
       </button>
 
       {/* Advanced Settings */}
       {showAdvanced && (
-        <div style={{
-          backgroundColor: '#f9fafb',
-          padding: '20px',
-          borderRadius: '6px',
-          marginBottom: '20px',
-          border: '1px solid #e5e7eb'
+        <div className="animate-fade-in" style={{
+          background: 'var(--gray-50)',
+          padding: 'var(--space-5)',
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-5)',
+          border: '1px solid var(--gray-200)'
         }}>
-          <h4 style={{
-            margin: '0 0 20px 0',
-            fontSize: '15px',
-            fontWeight: '600',
-            color: '#1f2937'
-          }}>
-            การตั้งค่าขั้นสูง
+          <h4 className="apple-heading-sm" style={{ marginBottom: 'var(--space-5)' }}>
+            ⚙️ การตั้งค่าขั้นสูง
           </h4>
 
           {/* NDVI Source */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={styles.label}>
-              แหล่งข้อมูล NDVI (พืชพรรณ)
+          <div className="apple-section">
+            <label className="apple-label">
+              🌱 แหล่งข้อมูล NDVI (พืชพรรณ)
             </label>
             <select
               value={ndviSource}
               onChange={(e) => setNdviSource(e.target.value)}
               disabled={isPlanning}
-              style={{
-                ...styles.input,
-                cursor: 'pointer'
-              }}
+              className="apple-input apple-select"
             >
               {Object.entries(NDVI_SOURCES).map(([key, source]) => (
                 <option key={key} value={key}>
@@ -478,35 +474,16 @@ const PathPlanningPanel = ({
           </div>
 
           {ndviSource === 'sentinel2' && (
-            <div style={{
-              backgroundColor: '#d1fae5',
-              padding: '14px',
-              borderRadius: '6px',
-              marginBottom: '20px',
-              border: '1px solid #a7f3d0'
-            }}>
-              <div style={{
-                fontSize: '13px',
-                fontWeight: '600',
-                marginBottom: '14px',
-                color: '#065f46'
-              }}>
-                Sentinel-2 Settings
+            <div className="apple-card-subtle" style={{ padding: 'var(--space-4)', marginBottom: 'var(--space-5)' }}>
+              <div className="apple-section-title">
+                🛰️ Sentinel-2 Settings
               </div>
 
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  marginBottom: '8px',
-                  color: '#065f46'
-                }}>
-                  Date Range
-                </label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ marginBottom: 'var(--space-4)' }}>
+                <label className="apple-label">📅 Date Range</label>
+                <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
                   <div>
-                    <div style={{ fontSize: '11px', color: '#065f46', marginBottom: '4px', fontWeight: '500' }}>
+                    <div className="apple-text-xs" style={{ marginBottom: 'var(--space-1)' }}>
                       เริ่มต้น
                     </div>
                     <input
@@ -514,17 +491,11 @@ const PathPlanningPanel = ({
                       value={ndviDateStart}
                       onChange={(e) => setNdviDateStart(e.target.value)}
                       disabled={isPlanning}
-                      style={{
-                        width: '90%',
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        border: '1px solid #d1d5db',
-                        fontSize: '13px'
-                      }}
+                      className="apple-input"
                     />
                   </div>
                   <div>
-                    <div style={{ fontSize: '11px', color: '#065f46', marginBottom: '4px', fontWeight: '500' }}>
+                    <div className="apple-text-xs" style={{ marginBottom: 'var(--space-1)' }}>
                       สิ้นสุด
                     </div>
                     <input
@@ -532,27 +503,15 @@ const PathPlanningPanel = ({
                       value={ndviDateEnd}
                       onChange={(e) => setNdviDateEnd(e.target.value)}
                       disabled={isPlanning}
-                      style={{
-                        width: '90%',
-                        padding: '8px 10px',
-                        borderRadius: '6px',
-                        border: '1px solid #d1d5db',
-                        fontSize: '13px'
-                      }}
+                      className="apple-input"
                     />
                   </div>
                 </div>
               </div>
 
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{
-                  display: 'block',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  marginBottom: '8px',
-                  color: '#065f46'
-                }}>
-                  Cloud Cover สูงสุด: {ndviCloudCoverMax}%
+              <div style={{ marginBottom: 'var(--space-4)' }}>
+                <label className="apple-label">
+                  ☁️ Cloud Cover สูงสุด: <span className="apple-badge apple-badge-blue">{ndviCloudCoverMax}%</span>
                 </label>
                 <input
                   type="range"
@@ -562,29 +521,13 @@ const PathPlanningPanel = ({
                   value={ndviCloudCoverMax}
                   onChange={(e) => setNdviCloudCoverMax(parseInt(e.target.value))}
                   disabled={isPlanning}
-                  style={{ width: '100%', accentColor: '#059669' }}
+                  className="apple-slider"
                 />
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  fontSize: '11px',
-                  color: '#6b7280',
-                  marginTop: '4px'
-                }}>
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
               </div>
 
               <div>
-                <label style={{
-                  display: 'block',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  marginBottom: '8px',
-                  color: '#065f46'
-                }}>
-                  GEE Project ID
+                <label className="apple-label">
+                  🔑 GEE Project ID
                 </label>
                 <input
                   type="text"
@@ -592,31 +535,22 @@ const PathPlanningPanel = ({
                   onChange={(e) => setGeeProjectId(e.target.value)}
                   disabled={isPlanning}
                   placeholder="pro-gee-475208"
-                  style={{
-                    width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    border: '1px solid #d1d5db',
-                    fontSize: '13px'
-                  }}
+                  className="apple-input"
                 />
               </div>
             </div>
           )}
 
           {/* Soil Source */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={styles.label}>
-              แหล่งข้อมูลดิน
+          <div className="apple-section">
+            <label className="apple-label">
+              🪨 แหล่งข้อมูลดิน
             </label>
             <select
               value={soilSource}
               onChange={(e) => setSoilSource(e.target.value)}
               disabled={isPlanning}
-              style={{
-                ...styles.input,
-                cursor: 'pointer'
-              }}
+              className="apple-input apple-select"
             >
               {Object.entries(SOIL_SOURCES).map(([key, source]) => (
                 <option key={key} value={key}>
@@ -630,28 +564,27 @@ const PathPlanningPanel = ({
             <label style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: 'var(--space-2)',
               cursor: 'pointer',
-              fontSize: '14px',
-              marginBottom: '20px',
-              color: '#374151'
+              fontSize: 'var(--font-size-base)',
+              marginBottom: 'var(--space-5)'
             }}>
               <input
                 type="checkbox"
                 checked={soilConsiderMoisture}
                 onChange={(e) => setSoilConsiderMoisture(e.target.checked)}
                 disabled={isPlanning}
-                style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#3b82f6' }}
+                className="apple-checkbox"
               />
-              <span>พิจารณาความชื้นในดิน</span>
+              <span>💧 พิจารณาความชื้นในดิน</span>
             </label>
           )}
 
-          <div style={styles.divider}></div>
+          <hr className="apple-divider" />
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={styles.label}>
-              น้ำหนักความสูง: {elevationWeight}
+          <div style={{ marginBottom: 'var(--space-4)' }}>
+            <label className="apple-label">
+              📏 น้ำหนักความสูง: <span className="apple-badge apple-badge-gray">{elevationWeight}</span>
             </label>
             <input
               type="range"
@@ -661,13 +594,13 @@ const PathPlanningPanel = ({
               value={elevationWeight}
               onChange={(e) => setElevationWeight(parseFloat(e.target.value))}
               disabled={isPlanning}
-              style={{ width: '100%', accentColor: '#3b82f6' }}
+              className="apple-slider"
             />
           </div>
 
-          <div style={{ marginBottom: '20px',width:"90%" }}>
-            <label style={styles.label}>
-              จำนวนจุดสูงสุด: {maxWaypoints}
+          <div style={{ marginBottom: 'var(--space-4)' }}>
+            <label className="apple-label">
+              🎯 จำนวนจุดสูงสุด: <span className="apple-badge apple-badge-gray">{maxWaypoints}</span>
             </label>
             <input
               type="number"
@@ -677,96 +610,55 @@ const PathPlanningPanel = ({
               value={maxWaypoints}
               onChange={(e) => setMaxWaypoints(parseInt(e.target.value))}
               disabled={isPlanning}
-              style={styles.input}
+              className="apple-input"
             />
           </div>
 
-          <div style={styles.divider}></div>
+          <hr className="apple-divider" />
 
           {/* Multi-Path Planning */}
-          <div style={{
-            backgroundColor: '#fef3c7',
-            padding: '14px',
-            borderRadius: '6px',
-            border: '1px solid #fde68a'
-          }}>
-            <div style={{
-              fontSize: '14px',
-              fontWeight: '600',
-              marginBottom: '12px',
-              color: '#92400e'
-            }}>
-              Multi-Path Planning
+          <div className="apple-card-subtle" style={{ padding: 'var(--space-4)' }}>
+            <div className="apple-section-title" style={{ marginBottom: 'var(--space-3)' }}>
+              🔀 Multi-Path Planning
             </div>
 
             <label style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: 'var(--space-2)',
               cursor: 'pointer',
-              fontSize: '14px',
-              marginBottom: '14px',
-              color: '#78350f'
+              fontSize: 'var(--font-size-base)',
+              marginBottom: 'var(--space-4)'
             }}>
               <input
                 type="checkbox"
                 checked={enableMultiPath}
                 onChange={(e) => setEnableMultiPath(e.target.checked)}
                 disabled={isPlanning}
-                style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#f59e0b' }}
+                className="apple-checkbox"
               />
               <span>เปิดใช้งานการสร้างหลายเส้นทาง</span>
             </label>
 
             {enableMultiPath && (
-              <div style={{
-                backgroundColor: '#ffffff',
-                padding: '12px',
-                borderRadius: '6px',
-                fontSize: '13px',
-                border: '1px solid #fde68a'
-              }}>
-                <div style={{ marginBottom: '12px' }}>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    marginBottom: '8px',
-                    color: '#78350f'
-                  }}>
-                    จำนวนเส้นทางสูงสุด: {maxAlternativePaths}
-                  </label>
-                  <input
-                    type="range"
-                    min="2"
-                    max="10"
-                    step="1"
-                    value={maxAlternativePaths}
-                    onChange={(e) => setMaxAlternativePaths(parseInt(e.target.value))}
-                    disabled={isPlanning}
-                    style={{ width: '100%', accentColor: '#f59e0b' }}
-                  />
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '11px',
-                    color: '#9ca3af',
-                    marginTop: '4px'
-                  }}>
-                    <span>2 เส้นทาง</span>
-                    <span>10 เส้นทาง</span>
+              <div className="animate-fade-in">
+                <label className="apple-label">
+                  จำนวนเส้นทางสูงสุด: <span className="apple-badge apple-badge-blue">{maxAlternativePaths}</span>
+                </label>
+                <input
+                  type="range"
+                  min="2"
+                  max="10"
+                  step="1"
+                  value={maxAlternativePaths}
+                  onChange={(e) => setMaxAlternativePaths(parseInt(e.target.value))}
+                  disabled={isPlanning}
+                  className="apple-slider"
+                />
+                <div className="apple-info-box apple-info-box-info" style={{ marginTop: 'var(--space-3)' }}>
+                  <div className="apple-text-xs">
+                    ระบบจะสร้างเส้นทางด้วยกลยุทธ์ต่างๆ เช่น Balanced, Prefer Roads, Shortest, Easy Terrain และ Avoid Steep
                   </div>
-                </div>
-
-                <div style={{
-                  fontSize: '12px',
-                  color: '#78350f',
-                  lineHeight: '1.5',
-                  backgroundColor: '#fffbeb',
-                  padding: '10px',
-                  borderRadius: '4px'
-                }}>
-                  ระบบจะสร้างเส้นทางด้วยกลยุทธ์ต่างๆ เช่น Balanced, Prefer Roads, Shortest, Easy Terrain และ Avoid Steep
                 </div>
               </div>
             )}
@@ -778,167 +670,127 @@ const PathPlanningPanel = ({
       <button
         onClick={handlePlanPath}
         disabled={!startPoint || !goalPoint || isPlanning}
+        className="apple-button apple-button-success apple-button-full apple-button-lg"
         style={{
-          ...styles.button,
-          width: '100%',
-          padding: '12px 16px',
-          fontSize: '15px',
-          fontWeight: '600',
-          backgroundColor: (!startPoint || !goalPoint || isPlanning) ? '#d1d5db' : '#10b981',
-          color: 'white',
-          cursor: (!startPoint || !goalPoint || isPlanning) ? 'not-allowed' : 'pointer'
+          background: (!startPoint || !goalPoint || isPlanning)
+            ? 'var(--gray-300)'
+            : 'linear-gradient(135deg, var(--apple-green) 0%, #32d65a 100%)',
+          boxShadow: (!startPoint || !goalPoint || isPlanning)
+            ? 'none'
+            : '0 4px 12px rgba(48, 209, 88, 0.3)'
         }}
       >
-        {isPlanning ? 'กำลังคำนวน...' : 'คำนวนเส้นทาง'}
+        {isPlanning ? (
+          <>
+            <span className="animate-pulse">⏳</span> กำลังคำนวน...
+          </>
+        ) : (
+          <>🚀 คำนวนเส้นทาง</>
+        )}
       </button>
 
       {/* Path Statistics */}
       {pathStats && (
-        <div style={{
-          marginTop: '20px',
-          backgroundColor: '#d1fae5',
-          padding: '16px',
-          borderRadius: '6px',
-          border: '1px solid #a7f3d0'
+        <div className="apple-card-subtle animate-fade-in" style={{
+          marginTop: 'var(--space-5)',
+          background: 'linear-gradient(135deg, rgba(48, 209, 88, 0.05) 0%, rgba(48, 209, 88, 0.1) 100%)',
+          borderColor: 'var(--apple-green)'
         }}>
-          <h4 style={{
-            margin: '0 0 14px 0',
-            fontSize: '15px',
-            fontWeight: '600',
-            color: '#065f46'
+          <h4 className="apple-heading-sm" style={{
+            marginBottom: 'var(--space-4)',
+            color: 'var(--apple-green)'
           }}>
-            สถิติเส้นทาง
+            📊 สถิติเส้นทาง
           </h4>
-          <div style={{ fontSize: '13px', lineHeight: '1.8', color: '#047857' }}>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 'var(--space-3)',
+            marginBottom: 'var(--space-4)'
+          }}>
             {pathStats.distance && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span>ระยะทาง</span>
-                <strong>{pathStats.distance.toFixed(2)} กม.</strong>
-              </div>
+              <StatCard
+                icon="📏"
+                label="ระยะทาง"
+                value={pathStats.distance.toFixed(2)}
+                unit="กม."
+              />
             )}
             {pathStats.waypoints && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span>จำนวนจุด</span>
-                <strong>{pathStats.waypoints}</strong>
-              </div>
+              <StatCard
+                icon="📍"
+                label="จำนวนจุด"
+                value={pathStats.waypoints}
+                unit="จุด"
+              />
             )}
             {pathStats.elevation_gain !== undefined && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span>ความสูงสูงสุด</span>
-                <strong>{pathStats.elevation_gain.toFixed(0)} ม.</strong>
-              </div>
+              <StatCard
+                icon="⛰️"
+                label="ความสูงสูงสุด"
+                value={pathStats.elevation_gain.toFixed(0)}
+                unit="ม."
+              />
             )}
             {pathStats.computation_time && (
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>เวลาคำนวน</span>
-                <strong>{pathStats.computation_time.toFixed(2)} วินาที</strong>
-              </div>
+              <StatCard
+                icon="⏱️"
+                label="เวลาคำนวน"
+                value={pathStats.computation_time.toFixed(2)}
+                unit="วินาที"
+              />
             )}
           </div>
 
           {/* Terrain Info Section */}
           {pathStats.terrain_info && (
-            <div style={{
-              marginTop: '14px',
-              paddingTop: '14px',
-              borderTop: '1px solid #a7f3d0'
-            }}>
-              <h4 style={{
-                margin: '0 0 12px 0',
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#065f46'
-              }}>
-                ข้อมูลภูมิประเทศ
+            <div>
+              <hr className="apple-divider" />
+              <h4 className="apple-section-title" style={{ marginBottom: 'var(--space-3)' }}>
+                🗺️ ข้อมูลภูมิประเทศ
               </h4>
-              <div style={{ fontSize: '12px', lineHeight: '1.6' }}>
-                {pathStats.terrain_info.has_ndvi ? (
-                  <div style={{
-                    backgroundColor: '#ecfdf5',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    marginBottom: '10px',
-                    border: '1px solid #a7f3d0'
-                  }}>
-                    <div style={{ fontWeight: '600', marginBottom: '4px', color: '#065f46' }}>
-                      NDVI (พืชพรรณ)
-                    </div>
-                    <div style={{ fontSize: '11px', color: '#047857' }}>
-                      แหล่งข้อมูล: {pathStats.terrain_info.ndvi_source}
-                      {pathStats.terrain_info.ndvi_stats && (
-                        <>
-                          <br />ค่าเฉลี่ย: {pathStats.terrain_info.ndvi_stats.mean.toFixed(3)}
-                          <br />ช่วง: [{pathStats.terrain_info.ndvi_stats.min.toFixed(3)}, {pathStats.terrain_info.ndvi_stats.max.toFixed(3)}]
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <div style={{
-                    backgroundColor: '#f9fafb',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    marginBottom: '10px',
-                    fontSize: '11px',
-                    color: '#6b7280',
-                    border: '1px solid #e5e7eb'
-                  }}>
-                    NDVI: ไม่ได้ใช้งาน
-                  </div>
-                )}
 
-                {pathStats.terrain_info.has_soil ? (
-                  <div style={{
-                    backgroundColor: '#fef3c7',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    marginBottom: '10px',
-                    border: '1px solid #fde68a'
-                  }}>
-                    <div style={{ fontWeight: '600', marginBottom: '4px', color: '#92400e' }}>
-                      Soil (ข้อมูลดิน)
-                    </div>
-                    <div style={{ fontSize: '11px', color: '#78350f' }}>
-                      แหล่งข้อมูล: {pathStats.terrain_info.soil_source}
-                      <br />คุณสมบัติ: {pathStats.terrain_info.soil_properties?.join(', ')}
-                      {pathStats.terrain_info.soil_types_count && (
-                        <>
-                          <br />ชนิดดิน: {pathStats.terrain_info.soil_types_count} ชนิด
-                          {pathStats.terrain_info.dominant_soil_percentage && (
-                            <> (ชนิดหลัก {pathStats.terrain_info.dominant_soil_percentage.toFixed(1)}%)
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
+              {pathStats.terrain_info.has_ndvi && (
+                <div className="apple-info-box apple-info-box-success" style={{ marginBottom: 'var(--space-2)' }}>
+                  <div className="apple-label">🌱 NDVI (พืชพรรณ)</div>
+                  <div className="apple-text-xs">
+                    แหล่งข้อมูล: {pathStats.terrain_info.ndvi_source}
+                    {pathStats.terrain_info.ndvi_stats && (
+                      <>
+                        <br />ค่าเฉลี่ย: {pathStats.terrain_info.ndvi_stats.mean.toFixed(3)}
+                        <br />ช่วง: [{pathStats.terrain_info.ndvi_stats.min.toFixed(3)}, {pathStats.terrain_info.ndvi_stats.max.toFixed(3)}]
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <div style={{
-                    backgroundColor: '#f9fafb',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    marginBottom: '10px',
-                    fontSize: '11px',
-                    color: '#6b7280',
-                    border: '1px solid #e5e7eb'
-                  }}>
-                    Soil: ไม่ได้ใช้งาน
-                  </div>
-                )}
+                </div>
+              )}
 
-                {pathStats.terrain_info.has_osm_roads !== undefined && (
-                  <div style={{
-                    backgroundColor: pathStats.terrain_info.has_osm_roads ? '#dbeafe' : '#f9fafb',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    color: pathStats.terrain_info.has_osm_roads ? '#1e40af' : '#6b7280',
-                    border: pathStats.terrain_info.has_osm_roads ? '1px solid #93c5fd' : '1px solid #e5e7eb'
-                  }}>
-                    OpenStreetMap: {pathStats.terrain_info.has_osm_roads ? 'มีข้อมูลถนน' : 'ไม่มีข้อมูลถนน'}
+              {pathStats.terrain_info.has_soil && (
+                <div className="apple-info-box apple-info-box-warning" style={{ marginBottom: 'var(--space-2)' }}>
+                  <div className="apple-label">🪨 Soil (ข้อมูลดิน)</div>
+                  <div className="apple-text-xs">
+                    แหล่งข้อมูล: {pathStats.terrain_info.soil_source}
+                    <br />คุณสมบัติ: {pathStats.terrain_info.soil_properties?.join(', ')}
+                    {pathStats.terrain_info.soil_types_count && (
+                      <>
+                        <br />ชนิดดิน: {pathStats.terrain_info.soil_types_count} ชนิด
+                        {pathStats.terrain_info.dominant_soil_percentage && (
+                          <> (ชนิดหลัก {pathStats.terrain_info.dominant_soil_percentage.toFixed(1)}%)</>
+                        )}
+                      </>
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+
+              {pathStats.terrain_info.has_osm_roads !== undefined && (
+                <div className={`apple-info-box ${pathStats.terrain_info.has_osm_roads ? 'apple-info-box-info' : 'apple-info-box-error'}`}>
+                  <div className="apple-text-xs">
+                    🛣️ OpenStreetMap: {pathStats.terrain_info.has_osm_roads ? 'มีข้อมูลถนน' : 'ไม่มีข้อมูลถนน'}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -946,5 +798,36 @@ const PathPlanningPanel = ({
     </div>
   );
 };
+
+// Helper Component: Stat Card
+const StatCard = ({ icon, label, value, unit }) => (
+  <div style={{
+    background: 'white',
+    padding: 'var(--space-3)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--gray-200)'
+  }}>
+    <div className="apple-text-xs" style={{
+      marginBottom: 'var(--space-1)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--space-1)'
+    }}>
+      <span>{icon}</span>
+      <span>{label}</span>
+    </div>
+    <div style={{
+      fontSize: 'var(--font-size-xl)',
+      fontWeight: 'var(--font-weight-bold)',
+      color: 'var(--gray-800)',
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: 'var(--space-1)'
+    }}>
+      <span>{value}</span>
+      <span className="apple-text-xs">{unit}</span>
+    </div>
+  </div>
+);
 
 export default PathPlanningPanel;

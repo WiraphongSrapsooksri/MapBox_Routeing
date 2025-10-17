@@ -1,5 +1,6 @@
 // src/components/MultiPathDisplay.jsx
 import React, { useState, useEffect } from 'react';
+import '../styles/AppleDesignSystem.css';
 
 /**
  * Component สำหรับแสดงและจัดการหลายเส้นทางพร้อมกัน
@@ -63,11 +64,7 @@ const MultiPathDisplay = ({
   const totalPaths = 1 + (alternativePaths?.length || 0);
 
   return (
-    <div style={{
-      backgroundColor: 'white',
-      borderRadius: '12px',
-      boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
-      padding: '16px',
+    <div className="apple-card glass-panel animate-fade-in apple-scrollbar" style={{
       maxHeight: '600px',
       overflowY: 'auto'
     }}>
@@ -76,31 +73,37 @@ const MultiPathDisplay = ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '16px',
-        paddingBottom: '12px',
-        borderBottom: '2px solid #f0f0f0'
+        marginBottom: 'var(--space-5)',
+        paddingBottom: 'var(--space-4)',
+        borderBottom: '1px solid var(--gray-200)'
       }}>
-        <h3 style={{
-          margin: 0,
-          fontSize: '16px',
-          fontWeight: '600',
+        <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          color: '#333'
+          gap: 'var(--space-2)'
         }}>
-          🔀 เส้นทางทั้งหมด
-          <span style={{
-            fontSize: '14px',
-            fontWeight: '500',
-            color: '#666',
-            backgroundColor: '#f0f0f0',
-            padding: '2px 10px',
-            borderRadius: '12px'
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: 'var(--radius-md)',
+            background: 'linear-gradient(135deg, var(--apple-purple) 0%, #bf5af2 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '16px',
+            boxShadow: '0 2px 8px rgba(191, 90, 242, 0.3)'
           }}>
-            {totalPaths} เส้น
-          </span>
-        </h3>
+            🔀
+          </div>
+          <div>
+            <h3 className="apple-heading-sm" style={{ margin: 0 }}>
+              เส้นทางทั้งหมด
+            </h3>
+            <p className="apple-text-xs" style={{ margin: 0 }}>
+              {totalPaths} เส้นทาง
+            </p>
+          </div>
+        </div>
 
         {/* Toggle All Button */}
         <button
@@ -111,31 +114,15 @@ const MultiPathDisplay = ({
               return acc;
             }, {});
             setVisiblePaths(newState);
-            
+
             // Notify parent
             Object.keys(newState).forEach(pathId => {
               onPathToggle?.(pathId, newState[pathId]);
             });
           }}
-          style={{
-            padding: '6px 12px',
-            fontSize: '11px',
-            fontWeight: '600',
-            backgroundColor: '#f5f5f5',
-            color: '#666',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#e0e0e0';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#f5f5f5';
-          }}
+          className="apple-button apple-button-sm apple-button-secondary"
         >
-          {Object.values(visiblePaths).every(v => v) ? '🙈 ซ่อนทั้งหมด' : '👁️ แสดงทั้งหมด'}
+          {Object.values(visiblePaths).every(v => v) ? '👁️ ซ่อนทั้งหมด' : '👁️ แสดงทั้งหมด'}
         </button>
       </div>
 
@@ -158,15 +145,13 @@ const MultiPathDisplay = ({
       {alternativePaths && alternativePaths.length > 0 && (
         <>
           <div style={{
-            margin: '16px 0',
-            padding: '8px 0',
-            borderTop: '1px dashed #e0e0e0',
-            fontSize: '12px',
-            fontWeight: '600',
-            color: '#999',
-            textAlign: 'center'
+            margin: 'var(--space-5) 0',
+            padding: 'var(--space-2) 0',
+            borderTop: '1px dashed var(--gray-300)'
           }}>
-            เส้นทางทางเลือก ({alternativePaths.length})
+            <div className="apple-section-title" style={{ textAlign: 'center' }}>
+              เส้นทางทางเลือก ({alternativePaths.length})
+            </div>
           </div>
 
           {alternativePaths.map((altPath, idx) => (
@@ -187,21 +172,16 @@ const MultiPathDisplay = ({
       )}
 
       {/* Legend */}
-      <div style={{
-        marginTop: '16px',
-        paddingTop: '12px',
-        borderTop: '1px solid #eee',
-        fontSize: '11px',
-        color: '#666',
-        lineHeight: '1.6'
+      <div className="apple-info-box apple-info-box-info" style={{
+        marginTop: 'var(--space-5)'
       }}>
-        <div style={{ marginBottom: '4px' }}>
-          💡 <strong>วิธีใช้:</strong>
+        <div className="apple-label" style={{ marginBottom: 'var(--space-2)' }}>
+          💡 วิธีใช้งาน
         </div>
-        <ul style={{ 
-          margin: '4px 0 0 0', 
+        <ul className="apple-text-xs" style={{
+          margin: 0,
           paddingLeft: '20px',
-          fontSize: '10px' 
+          lineHeight: 'var(--line-height-relaxed)'
         }}>
           <li>คลิกบนการ์ดเพื่อ<strong>เลือกเส้นทาง</strong></li>
           <li>ใช้สวิตช์เพื่อ<strong>แสดง/ซ่อน</strong>บนแผนที่</li>

@@ -1,6 +1,7 @@
 // src/components/MapboxGPXViewer.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '../styles/AppleDesignSystem.css';
 import PathPlanningPanel from './PathPlanningPanel';
 import MultiPathDisplay from './MultiPathDisplay';
 import { planPath } from '../services/pathPlanningApi';
@@ -1328,23 +1329,20 @@ const MapboxGPXViewer = () => {
         </div>
       )}
 
-      <div style={{
+      <div className="apple-scrollbar" style={{
         position: 'absolute',
         top: '20px',
         left: '20px',
-        width: '360px',
+        width: '380px',
         zIndex: 10,
         maxHeight: '90vh',
         overflowY: 'auto'
       }}>
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
-          padding: '15px',
-          marginBottom: '15px'
+        <div className="glass-panel animate-fade-in" style={{
+          padding: 'var(--space-4)',
+          marginBottom: 'var(--space-4)'
         }}>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
             <button
               onClick={() => {
                 setMode('gpx');
@@ -1356,7 +1354,7 @@ const MapboxGPXViewer = () => {
                 setPlannedRoute(null);
                 setError(null);
                 setDisplayedPaths(new Set());
-                
+
                 if (startMarkerRef.current) {
                   startMarkerRef.current.remove();
                   startMarkerRef.current = null;
@@ -1369,23 +1367,14 @@ const MapboxGPXViewer = () => {
                   currentMarkerRef.current.remove();
                   currentMarkerRef.current = null;
                 }
-                
+
                 setStartPoint(null);
                 setGoalPoint(null);
-                
+
                 clearAllRoutes();
               }}
-              style={{
-                flex: 1,
-                padding: '10px',
-                fontSize: '14px',
-                fontWeight: '600',
-                backgroundColor: mode === 'gpx' ? '#2196f3' : '#f5f5f5',
-                color: mode === 'gpx' ? 'white' : '#333',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer'
-              }}
+              className={`apple-button ${mode === 'gpx' ? 'apple-button-primary' : 'apple-button-secondary'}`}
+              style={{ flex: 1 }}
             >
               📁 อ่าน GPX
             </button>
@@ -1399,25 +1388,16 @@ const MapboxGPXViewer = () => {
                 setPlannedRoute(null);
                 setError(null);
                 setDisplayedPaths(new Set());
-                
+
                 if (currentMarkerRef.current) {
                   currentMarkerRef.current.remove();
                   currentMarkerRef.current = null;
                 }
-                
+
                 clearAllRoutes();
               }}
-              style={{
-                flex: 1,
-                padding: '10px',
-                fontSize: '14px',
-                fontWeight: '600',
-                backgroundColor: mode === 'planning' ? '#2196f3' : '#f5f5f5',
-                color: mode === 'planning' ? 'white' : '#333',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer'
-              }}
+              className={`apple-button ${mode === 'planning' ? 'apple-button-primary' : 'apple-button-secondary'}`}
+              style={{ flex: 1 }}
             >
               🗺️ วางแผนเส้นทาง
             </button>
@@ -1461,39 +1441,48 @@ const MapboxGPXViewer = () => {
         )}
 
         {mode === 'gpx' && (
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
-            padding: '20px'
-          }}>
-            <h3 style={{ margin: '0 0 15px 0', fontSize: '18px', fontWeight: '600' }}>
-              📁 GPX Route Viewer
-            </h3>
-
-            <div style={{ marginBottom: '15px' }}>
-              <label style={{
-                display: 'block',
-                fontSize: '14px',
-                fontWeight: '500',
-                marginBottom: '8px',
-                color: '#333'
+          <div className="apple-card glass-panel animate-fade-in">
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-3)',
+              marginBottom: 'var(--space-5)',
+              paddingBottom: 'var(--space-4)',
+              borderBottom: '1px solid var(--gray-200)'
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: 'var(--radius-md)',
+                background: 'linear-gradient(135deg, var(--apple-blue) 0%, #0077ed 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                boxShadow: '0 4px 12px rgba(0, 113, 227, 0.3)'
               }}>
-                เลือกเส้นทางจากโปรเจค:
+                📁
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 className="apple-heading-sm" style={{ margin: 0, marginBottom: '4px' }}>
+                  GPX Route Viewer
+                </h3>
+                <p className="apple-text-xs" style={{ margin: 0 }}>
+                  เลือกหรืออัพโหลดไฟล์ GPX
+                </p>
+              </div>
+            </div>
+
+            <div className="apple-section">
+              <label className="apple-label">
+                📂 เลือกเส้นทางจากโปรเจค
               </label>
               <select
                 value={selectedRoute}
                 onChange={handleRouteSelect}
                 disabled={!mapLoaded || isPlaying}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  borderRadius: '6px',
-                  border: '1px solid #ccc',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                  backgroundColor: 'white'
-                }}
+                className="apple-input apple-select"
               >
                 <option value="">-- เลือกเส้นทาง --</option>
                 {SAMPLE_GPX_FILES.map((file, idx) => (
@@ -1507,41 +1496,34 @@ const MapboxGPXViewer = () => {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              margin: '15px 0',
-              color: '#999',
-              fontSize: '13px'
+              gap: 'var(--space-3)',
+              margin: 'var(--space-5) 0',
+              color: 'var(--gray-400)',
+              fontSize: 'var(--font-size-sm)'
             }}>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#ddd' }}></div>
+              <div style={{ flex: 1, height: '1px', background: 'var(--gray-200)' }}></div>
               <span>หรือ</span>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#ddd' }}></div>
+              <div style={{ flex: 1, height: '1px', background: 'var(--gray-200)' }}></div>
             </div>
 
-            <label style={{
+            <label className="apple-card-subtle hover-lift transition-all" style={{
               display: 'block',
-              cursor: 'pointer',
-              padding: '12px',
-              backgroundColor: '#f8f9fa',
-              borderRadius: '8px',
-              border: '2px dashed #ccc',
+              cursor: isPlaying ? 'not-allowed' : 'pointer',
+              padding: 'var(--space-4)',
               textAlign: 'center',
-              fontWeight: '500',
-              transition: 'all 0.2s',
-              marginBottom: '20px',
-              opacity: isPlaying ? 0.5 : 1,
+              fontWeight: 'var(--font-weight-medium)',
+              borderStyle: 'dashed',
+              borderWidth: '2px',
+              opacity: isPlaying ? 0.4 : 1,
               pointerEvents: isPlaying ? 'none' : 'auto'
-            }}
-              onMouseEnter={(e) => {
-                if (!isPlaying) {
-                  e.currentTarget.style.backgroundColor = '#e9ecef';
-                  e.currentTarget.style.borderColor = '#666';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#f8f9fa';
-                e.currentTarget.style.borderColor = '#ccc';
-              }}>
-              📂 อัพโหลดไฟล์ GPX
+            }}>
+              <div style={{ fontSize: '32px', marginBottom: 'var(--space-2)' }}>📤</div>
+              <div className="apple-text" style={{ color: 'var(--apple-blue)' }}>
+                อัพโหลดไฟล์ GPX
+              </div>
+              <div className="apple-text-xs" style={{ marginTop: 'var(--space-1)' }}>
+                คลิกเพื่อเลือกไฟล์จากเครื่องของคุณ
+              </div>
               <input
                 type="file"
                 accept=".gpx"
